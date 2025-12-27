@@ -42,8 +42,8 @@ static const int refreshrate = 120;  /* refresh rate (per second) for client mov
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "󱏈",      tile },    /* first entry is default */
+	{ "󱏊",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
 
@@ -64,6 +64,9 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *firefoxcmd[] = { "firefox", NULL };
 static const char *roficmd[] = { "rofi", "-show", "drun", "-theme", "~/.config/rofi/config.rasi", NULL};
+static const char *maimcmd[] = { "sh", "-c", "maim -s | xclip -selection clipboard -t image/png", NULL };
+//maim -s ~/Imagenes/$(date +%F_%T).png | xclip -selection clipboard -t image/png
+
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -102,6 +105,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY,                       XK_n,      spawn,          {.v = firefoxcmd } },
+  { MODKEY,                       XK_Print,  spawn,          {.v = maimcmd}},
 };
 
 /* button definitions */
