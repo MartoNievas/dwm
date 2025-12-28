@@ -1,5 +1,5 @@
 /* See LICENSE file for copyright and license details. */
-
+#include <X11/XF86keysym.h>
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -29,8 +29,8 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 3,       0,           -1 },
-	{ "vesktop",  NULL,       NULL,       1 << 4,       1,           -1 },
-  { "Spotify",  NULL,      NULL,        1 << 5,       1,           -1 }
+	{ "vesktop",  NULL,       NULL,       1 << 4,       0,           -1 },
+  { "Spotify",  NULL,      NULL,        1 << 5,       0,           -1 }
 };
 
 /* layout(s) */
@@ -66,7 +66,9 @@ static const char *firefoxcmd[] = { "firefox", NULL };
 static const char *roficmd[] = { "rofi", "-show", "drun", "-theme", "~/.config/rofi/config.rasi", NULL};
 static const char *maimcmd[] = { "sh", "-c", "maim -s | xclip -selection clipboard -t image/png", NULL };
 //maim -s ~/Imagenes/$(date +%F_%T).png | xclip -selection clipboard -t image/png
-
+//pactl set-sink-volume @DEFAULT_SINK@ -5%
+static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -106,6 +108,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY,                       XK_n,      spawn,          {.v = firefoxcmd } },
   { MODKEY,                       XK_Print,  spawn,          {.v = maimcmd}},
+  { 0, XF86XK_AudioRaiseVolume, spawn, {.v = upvol }   },
+  { 0, XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
 };
 
 /* button definitions */
