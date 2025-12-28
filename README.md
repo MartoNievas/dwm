@@ -40,5 +40,5 @@ Los parches originales se guardan en el directorio `patches/`.
 ├── config.h
 ├── patches/
 │   ├── dwm-vanitygaps-6.5.diff
-│   └── README.md
+│   └── dwm-attachaside-6.4.diff
 └── README.md
