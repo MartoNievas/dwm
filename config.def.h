@@ -90,6 +90,7 @@ static const char *maimcmd[] = { "sh", "-c", "maim -s | xclip -selection clipboa
 //pactl set-sink-volume @DEFAULT_SINK@ -5%
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
+static const char *thunarcmd[] = {"thunar", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -150,6 +151,7 @@ static const Key keys[] = {
   { MODKEY,                       XK_Print,  spawn,          {.v = maimcmd}},
   { 0, XF86XK_AudioRaiseVolume, spawn, {.v = upvol }   },
   { 0, XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
+  {MODKEY,                        XK_e,      spawn,          {.v = thunarcmd}},
 };
 
 /* button definitions */
