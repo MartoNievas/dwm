@@ -101,7 +101,7 @@ static const char *roficmd[] = {
 
 static const char *maimcmd[] = {
     "sh", "-c",
-    "FILE=\"$HOME/Pictures/screenshot_$(date +%s).png\"; maim -s \"$FILE\" && "
+    "FILE=\"$HOME/Imagenes/screenshot_$(date +%s).png\"; maim -s \"$FILE\" && "
     "xclip -selection clipboard -t image/png -i \"$FILE\"",
     NULL};
 
