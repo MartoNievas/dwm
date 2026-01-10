@@ -98,8 +98,13 @@ static const char *termcmd[] = {"st", NULL};
 static const char *firefoxcmd[] = {"firefox", NULL};
 static const char *roficmd[] = {
     "rofi", "-show", "drun", "-theme", "~/.config/rofi/config.rasi", NULL};
+
 static const char *maimcmd[] = {
-    "sh", "-c", "maim -s | xclip -selection clipboard -t image/png", NULL};
+    "sh", "-c",
+    "FILE=\"$HOME/Pictures/screenshot_$(date +%s).png\"; maim -s \"$FILE\" && "
+    "xclip -selection clipboard -t image/png -i \"$FILE\"",
+    NULL};
+
 // maim -s ~/Imagenes/$(date +%F_%T).png | xclip -selection clipboard -t
 // image/png pactl set-sink-volume @DEFAULT_SINK@ -5%
 static const char *upvol[] = {"/usr/bin/pactl", "set-sink-volume",
