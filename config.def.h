@@ -1,14 +1,14 @@
 /* See LICENSE file for copyright and license details. */
 #include <X11/XF86keysym.h>
 /* appearance */
-static const unsigned int borderpx = 2; /* border pixel of windows */
-static const unsigned int snap = 32;    /* snap pixel */
-static const unsigned int gappih = 20;  /* horiz inner gap between windows */
+static const unsigned int borderpx = 1; /* border pixel of windows */
+static const unsigned int snap = 22;    /* snap pixel */
+static const unsigned int gappih = 5;   /* horiz inner gap between windows */
 static const unsigned int gappiv = 10;  /* vert inner gap between windows */
 static const unsigned int gappoh =
     10; /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov =
-    30; /* vert outer gap between windows and screen edge */
+    10; /* vert outer gap between windows and screen edge */
 static int smartgaps =
     0; /* 1 means no outer gap when there is only one window */
 static const int showbar = 1; /* 0 means no bar */
@@ -40,7 +40,9 @@ static const Rule rules[] = {
     {"Gimp", NULL, NULL, 0, 1, -1},
     {"Firefox", NULL, NULL, 1 << 3, 0, -1},
     {"vesktop", NULL, NULL, 1 << 4, 0, -1},
-    {"Spotify", NULL, NULL, 1 << 5, 0, -1}};
+    {"Spotify", NULL, NULL, 1 << 5, 0, -1},
+    {"sober", NULL, NULL, 1 << 7, 0, -1},
+};
 
 /* layout(s) */
 static const float mfact = 0.55; /* factor of master area size [0.05..0.95] */
@@ -102,7 +104,8 @@ static const char *roficmd[] = {
 
 static const char *maimcmd[] = {
     "sh", "-c",
-    "FILE=\"$HOME/Imagenes/screenshot_$(date +%s).png\"; maim -s \"$FILE\" && "
+    "FILE=\"$HOME/Imágenes/screenshot_$(date +%s).png\"; "
+    "maim -s \"$FILE\" && "
     "xclip -selection clipboard -t image/png -i \"$FILE\"",
     NULL};
 
