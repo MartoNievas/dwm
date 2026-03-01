@@ -14,7 +14,7 @@ static int smartgaps =
 static const int showbar = 1; /* 0 means no bar */
 static const int topbar = 1;  /* 0 means bottom bar */
 static const char *fonts[] = {"JetBrainsMono Nerd Font:style=Bold:size=14"};
-static const char dmenufont[] = "JetBrainsMono Nerd Font:style=Bold:size=10";
+static const char dmenufont[] = "JetBrainsMono Nerd Font:style=Bold:size=14";
 
 /*Colors */
 static const char col_gray1[] = "#222222";
@@ -38,7 +38,6 @@ static const Rule rules[] = {
      */
     /* class      instance    title       tags mask     isfloating   monitor */
     {"Gimp", NULL, NULL, 0, 1, -1},
-    {"Firefox", NULL, NULL, 1 << 3, 0, -1},
     {"vesktop", NULL, NULL, 1 << 4, 0, -1},
     {"Spotify", NULL, NULL, 1 << 5, 0, -1},
     {"sober", NULL, NULL, 1 << 7, 0, -1},
@@ -117,6 +116,7 @@ static const char *downvol[] = {"/usr/bin/pactl", "set-sink-volume",
                                 "@DEFAULT_SINK@", "-5%", NULL};
 static const char *thunarcmd[] = {"thunar", NULL};
 
+#include "movestack.c"
 static const Key keys[] = {
     /* modifier                     key        function        argument */
     {MODKEY, XK_r, spawn, {.v = dmenucmd}},
@@ -125,6 +125,8 @@ static const Key keys[] = {
     {MODKEY, XK_b, togglebar, {0}},
     {MODKEY, XK_j, focusstack, {.i = +1}},
     {MODKEY, XK_k, focusstack, {.i = -1}},
+    {MODKEY | ShiftMask, XK_j, movestack, {.i = +1}},
+    {MODKEY | ShiftMask, XK_k, movestack, {.i = -1}},
     {MODKEY, XK_i, incnmaster, {.i = +1}},
     {MODKEY, XK_p, incnmaster, {.i = -1}},
     {MODKEY, XK_h, setmfact, {.f = -0.05}},
