@@ -1,2 +1,10 @@
+<<<<<<< HEAD
 config.h
 *.o
+=======
+*.o
+dwm
+*.rej
+*.orig
+config.h
+>>>>>>> patches
