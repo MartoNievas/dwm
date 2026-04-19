@@ -119,6 +119,8 @@ static const char *thunarcmd[] = {"thunar", NULL};
 #include "movestack.c"
 static const Key keys[] = {
     /* modifier                     key        function        argument */
+    {MODKEY | ShiftMask, XK_z, spawn, SHCMD("systemctl suspend")},
+    {MODKEY | ShiftMask, XK_l, spawn, SHCMD("slock")},
     {MODKEY, XK_r, spawn, {.v = dmenucmd}},
     {MODKEY, XK_d, spawn, {.v = roficmd}},
     {MODKEY, XK_Return, spawn, {.v = termcmd}},
