@@ -13,8 +13,8 @@ static int smartgaps =
     0; /* 1 means no outer gap when there is only one window */
 static const int showbar = 1; /* 0 means no bar */
 static const int topbar = 1;  /* 0 means bottom bar */
-static const char *fonts[] = {"JetBrainsMono Nerd Font:style=Bold:size=14"};
-static const char dmenufont[] = "JetBrainsMono Nerd Font:style=Bold:size=14";
+static const char *fonts[] = {"JetBrainsMono Nerd Font:style=Bold:size=13"};
+static const char dmenufont[] = "JetBrainsMono Nerd Font:style=Bold:size=13";
 
 /*Colors */
 static const char col_gray1[] = "#222222";
@@ -114,7 +114,7 @@ static const char *upvol[] = {"/usr/bin/pactl", "set-sink-volume",
                               "@DEFAULT_SINK@", "+5%", NULL};
 static const char *downvol[] = {"/usr/bin/pactl", "set-sink-volume",
                                 "@DEFAULT_SINK@", "-5%", NULL};
-static const char *thunarcmd[] = {"thunar", NULL};
+static const char *filecmd[] = {"dolphin", NULL};
 
 #include "movestack.c"
 static const Key keys[] = {
@@ -173,7 +173,7 @@ static const Key keys[] = {
     {MODKEY, XK_Print, spawn, {.v = maimcmd}},
     {0, XF86XK_AudioRaiseVolume, spawn, {.v = upvol}},
     {0, XF86XK_AudioLowerVolume, spawn, {.v = downvol}},
-    {MODKEY, XK_e, spawn, {.v = thunarcmd}},
+    {MODKEY, XK_e, spawn, {.v = filecmd}},
 };
 
 /* button definitions */
