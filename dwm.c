@@ -612,6 +612,26 @@ void buttonpress(XEvent *e) {
 
       statuscmdn = 0;
       for (text = s = stext; *s && x <= ev->x; s++) {
+        /* NUEVO: Salto de códigos Status2D (^c, ^b, ^d, ^f) */
+        if (*s == '^') {
+          ch = *s;
+          *s = '\0';
+          x += TEXTW(text) - lrpad;
+          *s = ch;
+          s++;
+          if (*s == 'f') { // Soporte para movimiento horizontal ^f
+            s++;
+            x += atoi(s);
+          }
+          while (*s && *s != '^')
+            s++;
+          text = s + 1;
+          if (!*s)
+            break; // Fin de cadena inesperado
+          continue;
+        }
+
+        /* Lógica original de detección de señales \x01, \x02... */
         if ((unsigned char)(*s) < ' ') {
           ch = *s;
           *s = '\0';

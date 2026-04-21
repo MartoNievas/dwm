@@ -169,10 +169,13 @@ static const Key keys[] = {
     {MODKEY, XK_e, spawn, {.v = filecmd}},
 };
 
+#define MODULE(name) "/home/martin/dev/suckless-btw/scripts/" name
+
 /* commands spawned when clicking statusbar, the mouse button pressed is
  * exported as BUTTON */
 static const StatusCmd statuscmds[] = {
-    {"/home/martin/dev/suckless-btw/slstatus/shellmodules/click_handler.sh", 1},
+    {MODULE("calendar.sh"), 1},
+    {MODULE("discord_click_handler.sh"), 2},
 };
 static const char *statuscmd[] = {"/bin/sh", "-c", NULL, NULL};
 
