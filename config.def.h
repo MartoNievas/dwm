@@ -1,4 +1,5 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/X.h>
 #include <X11/XF86keysym.h>
 /* appearance */
 static const unsigned int borderpx = 1; /* border pixel of windows */
@@ -71,6 +72,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
+
 #define TAGKEYS(KEY, TAG)                                                      \
   {MODKEY, KEY, view, {.ui = 1 << TAG}},                                       \
       {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},               \
@@ -164,8 +166,8 @@ static const Key keys[] = {
             TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_q, quit, {0}},
     {MODKEY, XK_n, spawn, {.v = firefoxcmd}},
     {MODKEY, XK_Print, spawn, {.v = maimcmd}},
-    {0, XF86XK_AudioRaiseVolume, spawn, {.v = upvol}},
-    {0, XF86XK_AudioLowerVolume, spawn, {.v = downvol}},
+    {ControlMask, XF86XK_AudioRaiseVolume, spawn, {.v = upvol}},
+    {ControlMask, XF86XK_AudioLowerVolume, spawn, {.v = downvol}},
     {MODKEY, XK_e, spawn, {.v = filecmd}},
 };
 
@@ -173,9 +175,26 @@ static const Key keys[] = {
 
 /* commands spawned when clicking statusbar, the mouse button pressed is
  * exported as BUTTON */
+
+#define LAPTOP_CONFIG
+
+/*Shared signal in both configs*/
+#define CALENDAR_SIGNAL 0x01
+
+#ifdef LAPTOP_CONFIG
+#define TOGGLE_LANGUAGE_SIGNAL 0x09
+#define DISCORD_SIGNAL 0x0c
+#endif // LAPTOP_CONFIG
+
+#ifdef DESKTOP_CONFIG
+#define TOGGLE_LANGUAGE_SIGNAL 0x07
+#define DISCORD_SIGNAL 0x09
+#endif // DESKTOP_CONFIG
+
 static const StatusCmd statuscmds[] = {
-    {MODULE("calendar.sh"), 1},
-    {MODULE("discord_click_handler.sh"), 2},
+    {MODULE("calendar.sh"), CALENDAR_SIGNAL},
+    {MODULE("toggle_keyboard_language.sh"), TOGGLE_LANGUAGE_SIGNAL},
+    {MODULE("discord_click_handler.sh"), DISCORD_SIGNAL},
 };
 static const char *statuscmd[] = {"/bin/sh", "-c", NULL, NULL};
 
