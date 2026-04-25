@@ -30,7 +30,7 @@ static const char *colors[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = {"", "", "", "", "", "", ""};
+static const char *tags[] = {"", "", "", "", "", ""};
 
 static const Rule rules[] = {
     /* xprop(1):
@@ -38,14 +38,12 @@ static const Rule rules[] = {
      *	WM_NAME(STRING) = title
      */
     /* class      instance    title       tags mask     isfloating   monitor */
-    {"Gimp", NULL, NULL, 0, 1, -1},
     {"vesktop", NULL, NULL, 1 << 4, 0, -1},
     {"Spotify", NULL, NULL, 1 << 5, 0, -1},
-    {"sober", NULL, NULL, 1 << 7, 0, -1},
 };
 
 /* layout(s) */
-static const float mfact = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact = 0.50; /* factor of master area size [0.05..0.95] */
 static const int nmaster = 1;    /* number of clients in master area */
 static const int resizehints =
     1; /* 1 means respect size hints in tiled resizals */
@@ -91,24 +89,30 @@ static char dmenumon[2] =
 static const char *dmenucmd[] = {
     "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
+
 static const char *termcmd[] = {"st", NULL};
 static const char *firefoxcmd[] = {"firefox", NULL};
-static const char *roficmd[] = {
-    "rofi", "-show", "drun", "-theme", "~/.config/rofi/config.rasi", NULL};
 
+#if defined(BUILD_DESKTOP)
+static const char *maimcmd[] = {
+    "sh", "-c",
+    "FILE=\"$HOME/imagenes/screenshot_$(date +%s).png\"; "
+    "maim -s \"$FILE\" && "
+    "xclip -selection clipboard -t image/png -i \"$FILE\"",
+    NULL};
+#else
 static const char *maimcmd[] = {
     "sh", "-c",
     "FILE=\"$HOME/Imágenes/screenshot_$(date +%s).png\"; "
     "maim -s \"$FILE\" && "
     "xclip -selection clipboard -t image/png -i \"$FILE\"",
     NULL};
-
+#endif
 // maim -s ~/Imagenes/$(date +%F_%T).png | xclip -selection clipboard -t
 // image/png pactl set-sink-volume @DEFAULT_SINK@ -5%
-static const char *upvol[] = {"pamixer", "-i",
-                              "5", NULL};
-static const char *downvol[] = {"pamixer", "-d",
-                                "5", NULL};
+/* Cambia las definiciones de comandos */
+static const char *upvol[] = {"/usr/bin/pamixer", "-i", "5", NULL};
+static const char *downvol[] = {"/usr/bin/pamixer", "-d", "5", NULL};
 static const char *filecmd[] = {"thunar", NULL};
 
 #include "movestack.c"
@@ -116,8 +120,7 @@ static const Key keys[] = {
     /* modifier                     key        function        argument */
     {MODKEY | ShiftMask, XK_z, spawn, SHCMD("systemctl suspend")},
     {MODKEY | ShiftMask, XK_l, spawn, SHCMD("slock")},
-    {MODKEY, XK_r, spawn, {.v = dmenucmd}},
-    {MODKEY, XK_d, spawn, {.v = roficmd}},
+    {MODKEY, XK_d, spawn, {.v = dmenucmd}},
     {MODKEY, XK_Return, spawn, {.v = termcmd}},
     {MODKEY, XK_b, togglebar, {0}},
     {MODKEY, XK_j, focusstack, {.i = +1}},
@@ -166,34 +169,35 @@ static const Key keys[] = {
             TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_q, quit, {0}},
     {MODKEY, XK_n, spawn, {.v = firefoxcmd}},
     {MODKEY, XK_Print, spawn, {.v = maimcmd}},
-    {ControlMask, XF86XK_AudioRaiseVolume, spawn, {.v = upvol}},
-    {ControlMask, XF86XK_AudioLowerVolume, spawn, {.v = downvol}},
+    {0, XF86XK_AudioRaiseVolume, spawn, {.v = upvol}},
+    {0, XF86XK_AudioLowerVolume, spawn, {.v = downvol}},
     {MODKEY, XK_e, spawn, {.v = filecmd}},
 };
 
-#define MODULE(name) "/home/martin/dev/suckless-btw/scripts/" name
+#define MODULE(name) "$HOME/dev/suckless-btw/scripts/" name
 
 /* commands spawned when clicking statusbar, the mouse button pressed is
  * exported as BUTTON */
 
-
 /*Shared signal in both configs*/
 #define CALENDAR_SIGNAL 0x01
 
-#if defined(BUILD_DESKTOP) 
+#if defined(BUILD_DESKTOP)
 #define TOGGLE_LANGUAGE_SIGNAL 0x07
 #define DISCORD_SIGNAL 0x09
-#else 
+#define AUDIO_DEVICE_SELECTOR_SIGNAL 0x06
+#else
 #define TOGGLE_LANGUAGE_SIGNAL 0x09
 #define DISCORD_SIGNAL 0x0c
-#endif 
-
-
+#endif
 
 static const StatusCmd statuscmds[] = {
     {MODULE("calendar-click-handler.sh"), CALENDAR_SIGNAL},
     {MODULE("toggle-keyboard-language.sh"), TOGGLE_LANGUAGE_SIGNAL},
     {MODULE("discord-click-handler.sh"), DISCORD_SIGNAL},
+#if defined(BUILD_DESKTOP)
+    {MODULE("audio-device-selector-handler.sh"), AUDIO_DEVICE_SELECTOR_SIGNAL},
+#endif
 };
 static const char *statuscmd[] = {"/bin/sh", "-c", NULL, NULL};
 
