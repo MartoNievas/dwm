@@ -105,11 +105,11 @@ static const char *maimcmd[] = {
 
 // maim -s ~/Imagenes/$(date +%F_%T).png | xclip -selection clipboard -t
 // image/png pactl set-sink-volume @DEFAULT_SINK@ -5%
-static const char *upvol[] = {"/usr/bin/pactl", "set-sink-volume",
-                              "@DEFAULT_SINK@", "+5%", NULL};
-static const char *downvol[] = {"/usr/bin/pactl", "set-sink-volume",
-                                "@DEFAULT_SINK@", "-5%", NULL};
-static const char *filecmd[] = {"dolphin", NULL};
+static const char *upvol[] = {"pamixer", "-i",
+                              "5", NULL};
+static const char *downvol[] = {"pamixer", "-d",
+                                "5", NULL};
+static const char *filecmd[] = {"thunar", NULL};
 
 #include "movestack.c"
 static const Key keys[] = {
@@ -176,25 +176,24 @@ static const Key keys[] = {
 /* commands spawned when clicking statusbar, the mouse button pressed is
  * exported as BUTTON */
 
-#define LAPTOP_CONFIG
 
 /*Shared signal in both configs*/
 #define CALENDAR_SIGNAL 0x01
 
-#ifdef LAPTOP_CONFIG
-#define TOGGLE_LANGUAGE_SIGNAL 0x09
-#define DISCORD_SIGNAL 0x0c
-#endif // LAPTOP_CONFIG
-
-#ifdef DESKTOP_CONFIG
+#if defined(BUILD_DESKTOP) 
 #define TOGGLE_LANGUAGE_SIGNAL 0x07
 #define DISCORD_SIGNAL 0x09
-#endif // DESKTOP_CONFIG
+#else 
+#define TOGGLE_LANGUAGE_SIGNAL 0x09
+#define DISCORD_SIGNAL 0x0c
+#endif 
+
+
 
 static const StatusCmd statuscmds[] = {
-    {MODULE("calendar.sh"), CALENDAR_SIGNAL},
-    {MODULE("toggle_keyboard_language.sh"), TOGGLE_LANGUAGE_SIGNAL},
-    {MODULE("discord_click_handler.sh"), DISCORD_SIGNAL},
+    {MODULE("calendar-click-handler.sh"), CALENDAR_SIGNAL},
+    {MODULE("toggle-keyboard-language.sh"), TOGGLE_LANGUAGE_SIGNAL},
+    {MODULE("discord-click-handler.sh"), DISCORD_SIGNAL},
 };
 static const char *statuscmd[] = {"/bin/sh", "-c", NULL, NULL};
 

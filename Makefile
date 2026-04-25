@@ -6,6 +6,13 @@ include config.mk
 SRC = drw.c dwm.c util.c
 OBJ = ${SRC:.c=.o}
 
+# Deteccion del hostname 
+CURRENT_HOST = $(shell hostname)
+
+ifeq ($(CURRENT_HOST),)archlinux-desktop)
+    CPPFLAGS += -DBUILD_DESKTOP
+endif
+
 all: dwm
 
 .c.o:
