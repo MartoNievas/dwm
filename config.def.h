@@ -168,7 +168,7 @@ static const Key keys[] = {
         TAGKEYS(XK_5, 4) TAGKEYS(XK_6, 5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8, 7)
             TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_q, quit, {0}},
     {MODKEY, XK_n, spawn, {.v = firefoxcmd}},
-    {MODKEY, XK_Print, spawn, {.v = maimcmd}},
+    {MODKEY | ShiftMask, XK_s, spawn, {.v = maimcmd}},
     {0, XF86XK_AudioRaiseVolume, spawn, {.v = upvol}},
     {0, XF86XK_AudioLowerVolume, spawn, {.v = downvol}},
     {MODKEY, XK_e, spawn, {.v = filecmd}},
