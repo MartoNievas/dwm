@@ -96,14 +96,18 @@ static const char *firefoxcmd[] = {"firefox", NULL};
 #if defined(BUILD_DESKTOP)
 static const char *maimcmd[] = {
     "sh", "-c",
-    "FILE=\"$HOME/imagenes/screenshot_$(date +%s).png\"; "
+    "DIR=\"$HOME/imagenes\"; "
+    "mkdir -p \"$DIR\"; "
+    "FILE=\"$DIR/screenshot_$(date '+%Y-%m-%d_%H-%M-%S').png\"; "
     "maim -s \"$FILE\" && "
     "xclip -selection clipboard -t image/png -i \"$FILE\"",
     NULL};
 #else
 static const char *maimcmd[] = {
     "sh", "-c",
-    "FILE=\"$HOME/Imágenes/screenshot_$(date +%s).png\"; "
+    "DIR=\"$HOME/Imágenes\"; "
+    "mkdir -p \"$DIR\"; "
+    "FILE=\"$DIR/screenshot_$(date '+%Y-%m-%d_%H-%M-%S').png\"; "
     "maim -s \"$FILE\" && "
     "xclip -selection clipboard -t image/png -i \"$FILE\"",
     NULL};
